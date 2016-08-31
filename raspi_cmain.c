@@ -1,5 +1,6 @@
 #include "/home/pi/raspicam/raspi_cmain.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <opencv/cxcore.h>
 #include <opencv/highgui.h>
@@ -269,6 +270,8 @@ int main(__attribute__((unused))int argc, __attribute__((unused))char* argv[]) {
   pthread_t tid;
   rpic.is_done = false;
   rpic.is_ready = false;
+  pthread_mutex_init(&rpic.mutex, NULL);
+  pthread_cond_init(&rpic.cond, NULL);
   pthread_create(&tid, NULL, CameraLoop, &rpic);
   pthread_mutex_lock(&rpic.mutex);
   while (!rpic.is_ready)

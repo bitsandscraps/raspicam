@@ -38,10 +38,8 @@ RaspiCamCvCapture* InitCamera(void) {
 
 int GetImageToUse(struct RaspiCamera* rpic) {
   int index;
-  pthread_mutex_lock(&rpic->mutex);
   index = rpic->index_to_use;
   rpic->status[index] = kBusy;
-  pthread_mutex_unlock(&rpic->mutex);
   return index;
 }
 
