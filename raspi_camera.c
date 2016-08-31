@@ -16,7 +16,7 @@ int ImageToFill(struct RaspiCamera* rpic) {
   int index;
   pthread_mutex_lock(&rpic->mutex);
   for (index = 0; index < 3; ++index) {
-    if (rpic->status[index] == rpic->index_to_use) continue;
+    if (index == rpic->index_to_use) continue;
     if (rpic->status[index] == kFree) break;
   }
   pthread_mutex_unlock(&rpic->mutex);
@@ -53,6 +53,7 @@ void* CameraLoop(void* args) {
     rpic->status[index] = kFree;
     rpic->images[index] = cvCreateImage(cvGetSize(image), IPL_DEPTH_8U, 3);
   }
+  rpic->index_to_use = 0;
   cvCopy(image, rpic->images[0], NULL);
   // Signal the main loop that it is ready.
   pthread_mutex_lock(&rpic->mutex);
