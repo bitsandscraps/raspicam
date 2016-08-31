@@ -286,8 +286,11 @@ int main(__attribute__((unused))int argc, __attribute__((unused))char* argv[]) {
     processed_image = ProcessImage(raw_image);
     FreeImage(&rpic, index);
     // Create windows and show the images.
-    cvNamedWindow("Raw", CV_WINDOW_AUTOSIZE);
-    cvNamedWindow("Processed", CV_WINDOW_AUTOSIZE);
+    cvNamedWindow("Raw", CV_WINDOW_NORMAL);
+    cvNamedWindow("Processed", CV_WINDOW_NORMAL);
+    cvResizeWindow("Raw", 480, 360);
+    cvResizeWindow("Processed", 480, 360);
+    cvMoveWindow("Processed", 0, 420);
     cvShowImage("Raw", raw_image);
     cvShowImage("Processed", processed_image);
     cvReleaseImage(&processed_image);
